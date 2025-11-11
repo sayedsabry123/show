@@ -334,7 +334,7 @@
         }
         
         .message-box::after {
-            content: """;
+            content: "";
             position: absolute;
             bottom: 10px;
             left: 10px;
@@ -573,43 +573,164 @@
             background: var(--accent-color);
         }
         
-        .voice-controls {
+        /* أنماط أيقونة الصوت المحسنة */
+        .voice-icon-container {
             position: fixed;
-            top: 100px;
-            left: 20px;
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: var(--shadow);
-            z-index: 99;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            min-width: 200px;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
         }
         
-        .voice-controls h4 {
+        .voice-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-color), #ff5722);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .voice-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .voice-icon:hover::before {
+            transform: scale(1);
+        }
+        
+        .voice-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.6);
+        }
+        
+        .voice-icon.pulse {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 152, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 152, 0, 0);
+            }
+        }
+        
+        .voice-controls-panel {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            min-width: 280px;
+            transform: translateY(-20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .voice-controls-panel.show {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .voice-controls-panel::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: 25px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            transform: rotate(45deg);
+            border-top: 1px solid #e0e0e0;
+            border-left: 1px solid #e0e0e0;
+        }
+        
+        .voice-controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .voice-controls-header h3 {
             color: var(--primary-color);
-            margin-bottom: 10px;
-            text-align: center;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        
+        .close-voice-panel {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #777;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-voice-panel:hover {
+            color: var(--accent-color);
+        }
+        
+        .voice-control-group {
+            margin-bottom: 15px;
+        }
+        
+        .voice-control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
         }
         
         .voice-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
             background: var(--secondary-color);
             color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            font-weight: 500;
             cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.3s ease;
+            margin-bottom: 10px;
         }
         
         .voice-btn:hover {
             background: var(--primary-color);
+            transform: translateY(-2px);
         }
         
         .voice-btn.stop {
@@ -620,30 +741,40 @@
             background: #d32f2f;
         }
         
-        .auto-intro {
-            position: fixed;
-            top: 20px;
-            left: 20px;
+        .voice-btn.read-section {
             background: var(--accent-color);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            z-index: 99;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
         }
         
-        .auto-intro:hover {
-            transform: translateY(-2px);
+        .voice-btn.read-section:hover {
+            background: #e68900;
+        }
+        
+        .voice-status {
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: var(--light-color);
+            color: var(--primary-color);
+            display: none;
+        }
+        
+        .voice-status.show {
+            display: block;
+            animation: fadeInOut 3s ease;
+        }
+        
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 1; }
         }
         
         .highlight {
-            background-color: yellow;
+            background-color: rgba(255, 235, 59, 0.3);
             transition: background-color 0.5s ease;
+            padding: 2px 4px;
+            border-radius: 3px;
         }
         
         @media (max-width: 768px) {
@@ -679,45 +810,71 @@
                 left: 0;
             }
             
-            .voice-controls, .auto-intro {
-                position: relative;
-                top: auto;
-                left: auto;
-                margin: 10px 0;
+            .voice-icon-container {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .voice-controls-panel {
+                top: 85px;
+                right: 15px;
+                left: 15px;
+                min-width: auto;
+            }
+            
+            .voice-controls-panel::before {
+                right: auto;
+                left: 25px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- زر التعريف التلقائي -->
-    <div class="auto-intro" id="autoIntro">
-        <i class="fas fa-robot"></i> التعريف التلقائي
+    <!-- أيقونة الصوت المحسنة -->
+    <div class="voice-icon-container">
+        <div class="voice-icon" id="voiceIcon">
+            <i class="fas fa-volume-up"></i>
+        </div>
     </div>
 
-    <!-- عناصر التحكم بالصوت -->
-    <div class="voice-controls" id="voiceControls">
-        <h4>التحكم بالصوت</h4>
-        <button class="voice-btn" id="readPage">
-            <i class="fas fa-volume-up"></i> قراءة الصفحة
-        </button>
-        <button class="voice-btn" id="readSection">
-            <i class="fas fa-headphones"></i> قراءة القسم
-        </button>
-        <button class="voice-btn stop" id="stopReading">
-            <i class="fas fa-stop"></i> إيقاف القراءة
-        </button>
-        <div style="margin-top: 10px;">
-            <label for="voiceSelect">اختر الصوت:</label>
-            <select id="voiceSelect" class="form-control" style="margin-top: 5px;"></select>
+    <!-- لوحة تحكم الصوت المحسنة -->
+    <div class="voice-controls-panel" id="voiceControlsPanel">
+        <div class="voice-controls-header">
+            <h3><i class="fas fa-headphones"></i> التحكم بالصوت</h3>
+            <button class="close-voice-panel" id="closeVoicePanel">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-        <div style="margin-top: 10px;">
-            <label for="speedSelect">سرعة القراءة:</label>
-            <select id="speedSelect" class="form-control" style="margin-top: 5px;">
-                <option value="0.5">بطيئة</option>
+        
+        <div class="voice-control-group">
+            <button class="voice-btn" id="readPage">
+                <i class="fas fa-book"></i> قراءة الصفحة كاملة
+            </button>
+            <button class="voice-btn read-section" id="readSection">
+                <i class="fas fa-file-alt"></i> قراءة القسم الحالي
+            </button>
+            <button class="voice-btn stop" id="stopReading">
+                <i class="fas fa-stop"></i> إيقاف القراءة
+            </button>
+        </div>
+        
+        <div class="voice-control-group">
+            <label for="voiceSelect"><i class="fas fa-user"></i> اختر الصوت:</label>
+            <select id="voiceSelect" class="form-control"></select>
+        </div>
+        
+        <div class="voice-control-group">
+            <label for="speedSelect"><i class="fas fa-tachometer-alt"></i> سرعة القراءة:</label>
+            <select id="speedSelect" class="form-control">
+                <option value="0.7">بطيئة جداً</option>
+                <option value="0.8">بطيئة</option>
                 <option value="1" selected>طبيعية</option>
-                <option value="1.5">سريعة</option>
+                <option value="1.2">سريعة</option>
+                <option value="1.5">سريعة جداً</option>
             </select>
         </div>
+        
+        <div class="voice-status" id="voiceStatus"></div>
     </div>
 
     <header>
@@ -948,13 +1105,11 @@
             
             <div class="media-container">
                 <div class="media-item">
-                    <!-- استبدل src بمصدر الصورة الفعلي -->
                     <img src="https://via.placeholder.com/600x400/4caf50/ffffff?text=صورة+عن+البرنامج" alt="صورة عن البرنامج">
                     <div class="media-caption">صورة تعبيرية عن البرنامج</div>
                 </div>
                 
                 <div class="media-item">
-                    <!-- استبدل src بمصدر الفيديو الفعلي -->
                     <video controls poster="https://via.placeholder.com/600x400/2e7d32/ffffff?text=فيديو+البرنامج">
                         <source src="video-placeholder.mp4" type="video/mp4">
                         متصفحك لا يدعم تشغيل الفيديو.
@@ -963,17 +1118,9 @@
                 </div>
                 
                 <div class="media-item">
-                    <!-- استبدل src بمصدر الصورة الفعلي -->
                     <img src="https://via.placeholder.com/600x400/2e7d32/ffffff?text=معمل+البرنامج" alt="معمل البرنامج">
                     <div class="media-caption">معامل البرنامج المتخصصة</div>
                 </div>
-            </div>
-            
-            <div style="margin-top: 20px;">
-                <h3>إضافة وسائط جديدة</h3>
-                <input type="file" id="mediaUpload" accept="image/*,video/*" multiple>
-                <button class="btn" onclick="uploadMedia()"><i class="fas fa-upload"></i> رفع الوسائط</button>
-                <div id="uploadStatus" style="margin-top: 10px;"></div>
             </div>
         </section>
         
@@ -1053,6 +1200,34 @@
         let currentText = '';
         let currentElement = null;
         
+        // التحكم في لوحة الصوت
+        const voiceIcon = document.getElementById('voiceIcon');
+        const voiceControlsPanel = document.getElementById('voiceControlsPanel');
+        const closeVoicePanel = document.getElementById('closeVoicePanel');
+        
+        // فتح وإغلاق لوحة التحكم بالصوت
+        voiceIcon.addEventListener('click', function() {
+            voiceControlsPanel.classList.toggle('show');
+            if (voiceControlsPanel.classList.contains('show')) {
+                voiceIcon.classList.add('pulse');
+            } else {
+                voiceIcon.classList.remove('pulse');
+            }
+        });
+        
+        closeVoicePanel.addEventListener('click', function() {
+            voiceControlsPanel.classList.remove('show');
+            voiceIcon.classList.remove('pulse');
+        });
+        
+        // إغلاق اللوحة عند النقر خارجها
+        document.addEventListener('click', function(event) {
+            if (!voiceIcon.contains(event.target) && !voiceControlsPanel.contains(event.target)) {
+                voiceControlsPanel.classList.remove('show');
+                voiceIcon.classList.remove('pulse');
+            }
+        });
+        
         // تهيئة نظام النطق
         function initSpeech() {
             // انتظار تحميل الأصوات
@@ -1093,6 +1268,17 @@
             }
         }
         
+        // عرض حالة الصوت
+        function showVoiceStatus(message) {
+            const statusElement = document.getElementById('voiceStatus');
+            statusElement.textContent = message;
+            statusElement.classList.add('show');
+            
+            setTimeout(() => {
+                statusElement.classList.remove('show');
+            }, 3000);
+        }
+        
         // قراءة النص
         function speakText(text, element = null) {
             if (isSpeaking) {
@@ -1123,18 +1309,24 @@
             
             speechUtterance.onstart = function() {
                 isSpeaking = true;
-                console.log('بدأت القراءة');
+                voiceIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+                voiceIcon.style.background = 'linear-gradient(135deg, #4caf50, #2e7d32)';
+                showVoiceStatus('جاري القراءة...');
             };
             
             speechUtterance.onend = function() {
                 isSpeaking = false;
-                console.log('انتهت القراءة');
+                voiceIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+                voiceIcon.style.background = 'linear-gradient(135deg, var(--accent-color), #ff5722)';
+                showVoiceStatus('تم الانتهاء من القراءة');
                 removeHighlight();
             };
             
             speechUtterance.onerror = function(event) {
                 isSpeaking = false;
-                console.error('خطأ في القراءة:', event);
+                voiceIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+                voiceIcon.style.background = 'linear-gradient(135deg, #f44336, #d32f2f)';
+                showVoiceStatus('حدث خطأ في القراءة');
                 removeHighlight();
             };
             
@@ -1147,6 +1339,9 @@
             if (speechSynthesis.speaking) {
                 speechSynthesis.cancel();
                 isSpeaking = false;
+                voiceIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+                voiceIcon.style.background = 'linear-gradient(135deg, var(--accent-color), #ff5722)';
+                showVoiceStatus('تم إيقاف القراءة');
                 removeHighlight();
             }
         }
@@ -1169,6 +1364,7 @@
         function readPage() {
             const pageContent = document.querySelector('.container').innerText;
             speakText(pageContent, document.querySelector('.container'));
+            voiceControlsPanel.classList.remove('show');
         }
         
         // قراءة القسم الحالي
@@ -1185,6 +1381,7 @@
                     speakText(sectionContent, firstSection);
                 }
             }
+            voiceControlsPanel.classList.remove('show');
         }
         
         // التعريف التلقائي بالموقع
@@ -1195,7 +1392,7 @@
                 يهدف البرنامج إلى إعداد كوادر متخصصة في مجال سلامة وجودة الأغذية.
                 يتضمن البرنامج فرص عمل متنوعة في قطاعات الصناعات الغذائية والهيئات الحكومية.
                 يمكنكم التنقل بين أقسام الموقع للتعرف على مزيد من التفاصيل.
-                استخدموا أزرار التحكم بالصوت لسماع محتوى الموقع.
+                استخدموا أيقونة الصوت لسماع محتوى الموقع.
             `;
             speakText(introText);
         }
@@ -1240,21 +1437,6 @@
                 });
             });
         });
-        
-        // وظيفة رفع الوسائط (وهمية للعرض)
-        function uploadMedia() {
-            const fileInput = document.getElementById('mediaUpload');
-            const statusDiv = document.getElementById('uploadStatus');
-            
-            if (fileInput.files.length === 0) {
-                statusDiv.innerHTML = '<p style="color: red;">يرجى اختيار ملفات أولاً</p>';
-                return;
-            }
-            
-            statusDiv.innerHTML = '<p style="color: green;">تم رفع الوسائط بنجاح (وظيفة تجريبية)</p>';
-            
-            // في التطبيق الحقيقي، هنا سيتم رفع الملفات إلى الخادم
-        }
         
         // إعداد عداد الطلاب المسجلين
         function animateCounter() {
@@ -1307,10 +1489,9 @@
             document.getElementById('readPage').addEventListener('click', readPage);
             document.getElementById('readSection').addEventListener('click', readCurrentSection);
             document.getElementById('stopReading').addEventListener('click', stopSpeaking);
-            document.getElementById('autoIntro').addEventListener('click', autoIntroduce);
             
             // التعريف التلقائي بعد تحميل الصفحة مباشرة
-            setTimeout(autoIntroduce, 1000);
+            setTimeout(autoIntroduce, 1500);
             
             // تبديل الشرائح تلقائياً كل 10 ثوانٍ
             setInterval(nextSlide, 10000);

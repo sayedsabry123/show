@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامج سلامة وجودة تصنيع الأغذية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #4caf50;
+            --accent-color: #ff9800;
+            --light-color: #e8f5e9;
+            --dark-color: #1b5e20;
+            --text-color: #333;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+        
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--primary-color);
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.5s ease;
+        }
+        
+        .logo:hover {
+            transform: rotate(15deg) scale(1.05);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            text-align: center;
+            min-width: 150px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+        }
+        
+        nav {
+            background-color: var(--dark-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav li {
+            margin: 0 15px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .slides-container {
+            position: relative;
+            margin: 30px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .slide {
+            display: none;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        .slide-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .slide-content {
+            margin-bottom: 25px;
+        }
+        
+        .slide-content p {
+            margin-bottom: 15px;
+        }
+        
+        .slide-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background-color: #e68900;
+        }
+        
+        .media-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .media-item {
+            flex: 1 1 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .media-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .media-item img, .media-item video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .media-caption {
+            padding: 10px;
+            background-color: #f9f9f9;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .opportunities {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .opportunity-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .opportunity-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .opportunity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .opportunity-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .message-box {
+            background-color: var(--light-color);
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .message-box::after {
+            content: """;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 60px;
+            color: rgba(0,0,0,0.05);
+            font-family: serif;
+        }
+        
+        .message-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--secondary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -12px;
+        }
+        
+        .right::after {
+            left: -12px;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin: 30px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .supervisor {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-3px);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--accent-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+        
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 99;
+        }
+        
+        .floating-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .floating-btn.whatsapp {
+            background: #25D366;
+        }
+        
+        .floating-btn.phone {
+            background: var(--accent-color);
+        }
+        
+        .voice-controls {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: var(--shadow);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 200px;
+        }
+        
+        .voice-controls h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .voice-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .voice-btn:hover {
+            background: var(--primary-color);
+        }
+        
+        .voice-btn.stop {
+            background: #f44336;
+        }
+        
+        .voice-btn.stop:hover {
+            background: #d32f2f;
+        }
+        
+        .auto-intro {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 99;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .auto-intro:hover {
+            transform: translateY(-2px);
+        }
+        
+        .highlight {
+            background-color: yellow;
+            transition: background-color 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .slide {
+                padding: 20px;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 21px;
+            }
+            
+            .left, .right {
+                left: 0;
+            }
+            
+            .voice-controls, .auto-intro {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- زر التعريف التلقائي -->
+    <div class="auto-intro" id="autoIntro">
+        <i class="fas fa-robot"></i> التعريف التلقائي
+    </div>
+
+    <!-- عناصر التحكم بالصوت -->
+    <div class="voice-controls" id="voiceControls">
+        <h4>التحكم بالصوت</h4>
+        <button class="voice-btn" id="readPage">
+            <i class="fas fa-volume-up"></i> قراءة الصفحة
+        </button>
+        <button class="voice-btn" id="readSection">
+            <i class="fas fa-headphones"></i> قراءة القسم
+        </button>
+        <button class="voice-btn stop" id="stopReading">
+            <i class="fas fa-stop"></i> إيقاف القراءة
+        </button>
+        <div style="margin-top: 10px;">
+            <label for="voiceSelect">اختر الصوت:</label>
+            <select id="voiceSelect" class="form-control" style="margin-top: 5px;"></select>
+        </div>
+        <div style="margin-top: 10px;">
+            <label for="speedSelect">سرعة القراءة:</label>
+            <select id="speedSelect" class="form-control" style="margin-top: 5px;">
+                <option value="0.5">بطيئة</option>
+                <option value="1" selected>طبيعية</option>
+                <option value="1.5">سريعة</option>
+            </select>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-apple-alt"></i>
+                </div>
+                <h1>برنامج سلامة وجودة تصنيع الأغذية</h1>
+                <p class="subtitle">كلية الزراعة - جامعة دمياط</p>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="studentsCount">0</span>
+                        <span class="stat-label">طالب مسجل</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">نسبة التشغيل</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">شريك صناعي</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#about"><i class="fas fa-info-circle"></i> عن البرنامج</a></li>
+                <li><a href="#opportunities"><i class="fas fa-briefcase"></i> فرص العمل</a></li>
+                <li><a href="#features"><i class="fas fa-star"></i> المميزات</a></li>
+                <li><a href="#messages"><i class="fas fa-comments"></i> رسائل توجيهية</a></li>
+                <li><a href="#media"><i class="fas fa-photo-video"></i> معرض الوسائط</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="slides-container">
+            <!-- الشريحة الأولى -->
+            <div class="slide active" id="slide1">
+                <h2 class="slide-title"><i class="fas fa-users"></i> المجموعة المشاركة في التكليف</h2>
+                <div class="slide-content">
+                    <p>نحن مجموعة من الطلاب المتفانين في تقديم هذا العمل التعريفي عن برنامج سلامة وجودة تصنيع الأغذية.</p>
+                    <p>نهدف من خلال هذا العمل إلى تعريف الطلاب الجدد بالفرص الواعدة التي يوفرها هذا البرنامج المتميز.</p>
+                    
+                    <div class="features" style="margin-top: 30px;">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3>شهادة معتمدة</h3>
+                            <p>شهادة معتمدة من جامعة دمياط ومعترف بها محليًا ودوليًا</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <h3>كادر تدريسي متميز</h3>
+                            <p>أعضاء هيئة تدريس متخصصين في مجال سلامة وجودة الأغذية</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-flask"></i>
+                            </div>
+                            <h3>معامل متطورة</h3>
+                            <p>معامل مجهزة بأحدث الأجهزة والتقنيات في مجال تحليل الأغذية</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-navigation">
+                    <button class="btn btn-outline" onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                    <button class="btn" onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+                </div>
+            </div>
+            
+            <!-- الشريحة الثانية -->
+            <div class="slide" id="slide2">
+                <h2 class="slide-title"><i class="fas fa-info-circle"></i> معلومات البرنامج</h2>
+                <div class="slide-content">
+                    <p>تعلن كلية الزراعة بجامعة دمياط عن بدء الدراسة وقبول التحويل من المستوى الأول بالبرنامج العام بكلية الزراعة أو الكليات الأخرى بجامعة دمياط أو الجامعات الأخرى لبرنامج سلامة وجودة تصنيع الأغذية.</p>
+                    <p>هذا برنامج خاص بمصروفات - بنظام الساعات المعتمدة وفقًا للقرار الوزاري رقم (2349) بتاريخ (21/10/2025).</p>
+                    <p>وذلك بناءً على موافقة مجلس الجامعة بجلسة رقم 239 الموافق 30/10/2025.</p>
+                    
+                    <h3 style="margin: 20px 0 10px; color: var(--primary-color);">الجدول الزمني للقبول</h3>
+                    <div class="timeline">
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h4>بداية التقديم</h4>
+                                <p>يبدأ التقديم للبرنامج في 1 سبتمبر 2025</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item right">
+                            <div class="timeline-content">
+                                <h4>آخر موعد للتقديم</h4>
+                                <p>ينتهي التقديم للبرنامج في 15 أكتوبر 2025</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h4>بداية الدراسة</h4>
+                                <p>تبدأ الدراسة في البرنامج في 1 نوفمبر 2025</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-navigation">
+                    <button class="btn btn-outline" onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                    <button class="btn" onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+                </div>
+            </div>
+            
+            <!-- الشريحة الثالثة -->
+            <div class="slide" id="slide3">
+                <h2 class="slide-title"><i class="fas fa-briefcase"></i> فرص العمل المتاحة</h2>
+                <div class="opportunities">
+                    <div class="opportunity-card">
+                        <h3><i class="fas fa-clipboard-check"></i> مراقب جودة</h3>
+                        <p>العمل في مراقبة جودة المنتجات الغذائية في المصانع والشركات.</p>
+                    </div>
+                    <div class="opportunity-card">
+                        <h3><i class="fas fa-user-shield"></i> مهندس سلامة أغذية</h3>
+                        <p>تصميم وتنفيذ أنظمة سلامة الغذاء في المنشآت الغذائية.</p>
+                    </div>
+                    <div class="opportunity-card">
+                        <h3><i class="fas fa-utensils"></i> أخصائي تغذية</h3>
+                        <p>العمل في المجال الطبي والتغذية العلاجية.</p>
+                    </div>
+                    <div class="opportunity-card">
+                        <h3><i class="fas fa-industry"></i> مدير إنتاج</h3>
+                        <p>إدارة عمليات الإنتاج في مصانع الأغذية.</p>
+                    </div>
+                    <div class="opportunity-card">
+                        <h3><i class="fas fa-landmark"></i> الهيئات الحكومية</h3>
+                        <p>العمل في هيئة سلامة الغذاء والمراكز البحثية.</p>
+                    </div>
+                    <div class="opportunity-card">
+                        <h3><i class="fas fa-hotel"></i> قطاعات أخرى</h3>
+                        <p>المطاعم والفنادق، شركات التموين، معامل التحاليل المتخصصة.</p>
+                    </div>
+                </div>
+                <div class="slide-navigation">
+                    <button class="btn btn-outline" onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                    <button class="btn" onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+                </div>
+            </div>
+        </div>
+        
+        <section id="features">
+            <h2 class="slide-title"><i class="fas fa-star"></i> مميزات البرنامج</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>شهادة معتمدة</h3>
+                    <p>شهادة معتمدة من جامعة دمياط ومعترف بها محليًا ودوليًا</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>كادر تدريسي متميز</h3>
+                    <p>أعضاء هيئة تدريس متخصصين في مجال سلامة وجودة الأغذية</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>معامل متطورة</h3>
+                    <p>معامل مجهزة بأحدث الأجهزة والتقنيات في مجال تحليل الأغذية</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>شراكات صناعية</h3>
+                    <p>شراكات مع كبرى الشركات والمصانع في مجال الصناعات الغذائية</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>تدريب ميداني</h3>
+                    <p>فرص تدريب ميداني في مصانع وشركات الأغذية الرائدة</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>فرص دولية</h3>
+                    <p>إمكانية المشاركة في برامج تبادل طلابي مع جامعات دولية</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="messages">
+            <h2 class="slide-title"><i class="fas fa-comments"></i> رسائل توجيهية للطلاب الجدد</h2>
+            
+            <div class="message-box">
+                <h3><i class="fas fa-lightbulb"></i> رسالة من منظور التفكير الناقد</h3>
+                <p>عزيزي الطالب/الطالبة،</p>
+                <p>في عالم يتزايد فيه الاهتمام بجودة وسلامة الغذاء، يعد برنامج سلامة وجودة تصنيع الأغذية خيارًا استراتيجيًا لمستقبل مهني واعد. من خلال التفكير الناقد، يمكننا تحليل أهمية هذا المجال:</p>
+                <p>• مع تزايد عدد السكان وتغير العادات الغذائية، تزداد الحاجة إلى متخصصين في سلامة الغذاء.</p>
+                <p>• التشريعات العالمية والمحلية تتجه نحو تشديد الرقابة على جودة الأغذية، مما يخلق فرص عمل متزايدة.</p>
+                <p>• الوعي الصحي المتزايد لدى المستهلكين يدفع الشركات إلى الاستثمار في أنظمة الجودة وسلامة الغذاء.</p>
+                <p>• هذا البرنامج يمنحك ميزة تنافسية في سوق العمل المحلي والدولي.</p>
+            </div>
+            
+            <div class="message-box">
+                <h3><i class="fas fa-question-circle"></i> لماذا تختار هذا البرنامج؟</h3>
+                <p>• برنامج متخصص يواكب احتياجات سوق العمل المحلي والعالمي.</p>
+                <p>• فرص عمل متنوعة في قطاعات متعددة.</p>
+                <p>• نظام الساعات المعتمدة يتيح مرونة في الدراسة.</p>
+                <p>• شهادة معتمدة من جامعة دمياط.</p>
+                <p>• إشراف أكاديمي متميز بقيادة الدكتور/ محمد عبده حسين.</p>
+            </div>
+        </section>
+        
+        <section id="media">
+            <h2 class="slide-title"><i class="fas fa-photo-video"></i> معرض الوسائط</h2>
+            <p>يمكنك إضافة الصور والفيديوهات الخاصة بالبرنامج هنا:</p>
+            
+            <div class="media-container">
+                <div class="media-item">
+                    <!-- استبدل src بمصدر الصورة الفعلي -->
+                    <img src="https://via.placeholder.com/600x400/4caf50/ffffff?text=صورة+عن+البرنامج" alt="صورة عن البرنامج">
+                    <div class="media-caption">صورة تعبيرية عن البرنامج</div>
+                </div>
+                
+                <div class="media-item">
+                    <!-- استبدل src بمصدر الفيديو الفعلي -->
+                    <video controls poster="https://via.placeholder.com/600x400/2e7d32/ffffff?text=فيديو+البرنامج">
+                        <source src="video-placeholder.mp4" type="video/mp4">
+                        متصفحك لا يدعم تشغيل الفيديو.
+                    </video>
+                    <div class="media-caption">فيديو تعريفي عن البرنامج</div>
+                </div>
+                
+                <div class="media-item">
+                    <!-- استبدل src بمصدر الصورة الفعلي -->
+                    <img src="https://via.placeholder.com/600x400/2e7d32/ffffff?text=معمل+البرنامج" alt="معمل البرنامج">
+                    <div class="media-caption">معامل البرنامج المتخصصة</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <h3>إضافة وسائط جديدة</h3>
+                <input type="file" id="mediaUpload" accept="image/*,video/*" multiple>
+                <button class="btn" onclick="uploadMedia()"><i class="fas fa-upload"></i> رفع الوسائط</button>
+                <div id="uploadStatus" style="margin-top: 10px;"></div>
+            </div>
+        </section>
+        
+        <section id="contact">
+            <h2 class="slide-title"><i class="fas fa-envelope"></i> اتصل بنا</h2>
+            
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">الاسم الكامل</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">رقم الهاتف</label>
+                        <input type="tel" id="phone" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">الرسالة</label>
+                        <textarea id="message" class="form-control" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-accent"><i class="fas fa-paper-plane"></i> إرسال الرسالة</button>
+                </form>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p class="supervisor">إشراف: الدكتور / محمد عبده حسين</p>
+                <p>كلية الزراعة - جامعة دمياط</p>
+                
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                
+                <p>© 2025 جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <div class="floating-buttons">
+        <div class="floating-btn whatsapp">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="floating-btn phone">
+            <i class="fas fa-phone"></i>
+        </div>
+    </div>
+
+    <script>
+        // متغيرات التنقل بين الشرائح
+        let currentSlide = 1;
+        const totalSlides = 3;
+        
+        // متغيرات نظام النطق
+        let speechSynthesis = window.speechSynthesis;
+        let speechUtterance = null;
+        let isSpeaking = false;
+        let voices = [];
+        let currentText = '';
+        let currentElement = null;
+        
+        // تهيئة نظام النطق
+        function initSpeech() {
+            // انتظار تحميل الأصوات
+            speechSynthesis.onvoiceschanged = function() {
+                voices = speechSynthesis.getVoices();
+                populateVoiceList();
+            };
+            
+            // تحميل الأصوات مباشرة إذا كانت متاحة
+            voices = speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                populateVoiceList();
+            }
+        }
+        
+        // تعبئة قائمة الأصوات المتاحة
+        function populateVoiceList() {
+            const voiceSelect = document.getElementById('voiceSelect');
+            voiceSelect.innerHTML = '';
+            
+            // فلترة الأصوات العربية أو استخدام الأصوات المتاحة
+            const arabicVoices = voices.filter(voice => 
+                voice.lang.startsWith('ar') || voice.lang.includes('ar'));
+            
+            const availableVoices = arabicVoices.length > 0 ? arabicVoices : voices;
+            
+            availableVoices.forEach(voice => {
+                const option = document.createElement('option');
+                option.textContent = `${voice.name} (${voice.lang})`;
+                option.setAttribute('data-lang', voice.lang);
+                option.setAttribute('data-name', voice.name);
+                voiceSelect.appendChild(option);
+            });
+            
+            // تحديد صوت عربي افتراضي إذا كان متاحاً
+            if (arabicVoices.length > 0) {
+                voiceSelect.selectedIndex = 0;
+            }
+        }
+        
+        // قراءة النص
+        function speakText(text, element = null) {
+            if (isSpeaking) {
+                stopSpeaking();
+            }
+            
+            const voiceSelect = document.getElementById('voiceSelect');
+            const speedSelect = document.getElementById('speedSelect');
+            const selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+            const rate = parseFloat(speedSelect.value);
+            
+            speechUtterance = new SpeechSynthesisUtterance(text);
+            speechUtterance.rate = rate;
+            speechUtterance.pitch = 1;
+            speechUtterance.volume = 1;
+            
+            // تحديد الصوت المختار
+            const selectedVoice = voices.find(voice => voice.name === selectedOption);
+            if (selectedVoice) {
+                speechUtterance.voice = selectedVoice;
+            }
+            
+            // إضافة تأثير التظليل للنص أثناء القراءة
+            if (element) {
+                currentElement = element;
+                highlightText(element);
+            }
+            
+            speechUtterance.onstart = function() {
+                isSpeaking = true;
+                console.log('بدأت القراءة');
+            };
+            
+            speechUtterance.onend = function() {
+                isSpeaking = false;
+                console.log('انتهت القراءة');
+                removeHighlight();
+            };
+            
+            speechUtterance.onerror = function(event) {
+                isSpeaking = false;
+                console.error('خطأ في القراءة:', event);
+                removeHighlight();
+            };
+            
+            speechSynthesis.speak(speechUtterance);
+            currentText = text;
+        }
+        
+        // إيقاف القراءة
+        function stopSpeaking() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+                isSpeaking = false;
+                removeHighlight();
+            }
+        }
+        
+        // تظليل النص أثناء القراءة
+        function highlightText(element) {
+            removeHighlight();
+            element.classList.add('highlight');
+        }
+        
+        // إزالة التظليل
+        function removeHighlight() {
+            if (currentElement) {
+                currentElement.classList.remove('highlight');
+                currentElement = null;
+            }
+        }
+        
+        // قراءة الصفحة بأكملها
+        function readPage() {
+            const pageContent = document.querySelector('.container').innerText;
+            speakText(pageContent, document.querySelector('.container'));
+        }
+        
+        // قراءة القسم الحالي
+        function readCurrentSection() {
+            const activeSlide = document.querySelector('.slide.active');
+            if (activeSlide) {
+                const sectionContent = activeSlide.innerText;
+                speakText(sectionContent, activeSlide);
+            } else {
+                // إذا لم تكن هناك شريحة نشطة، اقرأ أول قسم
+                const firstSection = document.querySelector('section');
+                if (firstSection) {
+                    const sectionContent = firstSection.innerText;
+                    speakText(sectionContent, firstSection);
+                }
+            }
+        }
+        
+        // التعريف التلقائي بالموقع
+        function autoIntroduce() {
+            const introText = `
+                مرحباً بكم في الموقع التعريفي لبرنامج سلامة وجودة تصنيع الأغذية.
+                هذا البرنامج المتميز تقدمه كلية الزراعة بجامعة دمياط.
+                يهدف البرنامج إلى إعداد كوادر متخصصة في مجال سلامة وجودة الأغذية.
+                يتضمن البرنامج فرص عمل متنوعة في قطاعات الصناعات الغذائية والهيئات الحكومية.
+                يمكنكم التنقل بين أقسام الموقع للتعرف على مزيد من التفاصيل.
+                استخدموا أزرار التحكم بالصوت لسماع محتوى الموقع.
+            `;
+            speakText(introText);
+        }
+        
+        // عرض شريحة محددة
+        function showSlide(n) {
+            // إخفاء جميع الشرائح
+            for (let i = 1; i <= totalSlides; i++) {
+                document.getElementById(`slide${i}`).classList.remove('active');
+            }
+            
+            // إظهار الشريحة المطلوبة
+            document.getElementById(`slide${n}`).classList.add('active');
+            currentSlide = n;
+        }
+        
+        // الانتقال للشريحة التالية
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(1);
+            }
+        }
+        
+        // الانتقال للشريحة السابقة
+        function prevSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            } else {
+                showSlide(totalSlides);
+            }
+        }
+        
+        // التنقل بين الأقسام
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // وظيفة رفع الوسائط (وهمية للعرض)
+        function uploadMedia() {
+            const fileInput = document.getElementById('mediaUpload');
+            const statusDiv = document.getElementById('uploadStatus');
+            
+            if (fileInput.files.length === 0) {
+                statusDiv.innerHTML = '<p style="color: red;">يرجى اختيار ملفات أولاً</p>';
+                return;
+            }
+            
+            statusDiv.innerHTML = '<p style="color: green;">تم رفع الوسائط بنجاح (وظيفة تجريبية)</p>';
+            
+            // في التطبيق الحقيقي، هنا سيتم رفع الملفات إلى الخادم
+        }
+        
+        // إعداد عداد الطلاب المسجلين
+        function animateCounter() {
+            const counter = document.getElementById('studentsCount');
+            const target = 250;
+            let current = 0;
+            const increment = target / 100;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                counter.textContent = Math.floor(current);
+            }, 20);
+        }
+        
+        // إظهار/إخفاء زر العودة للأعلى
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        // العودة للأعلى عند النقر على الزر
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // معالجة نموذج الاتصال
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('شكراً لتواصلكم! سنرد عليكم في أقرب وقت ممكن.');
+            this.reset();
+        });
+        
+        // تهيئة الصفحة عند التحميل
+        window.addEventListener('load', function() {
+            animateCounter();
+            initSpeech();
+            
+            // إعداد مستمعي الأحداث لأزرار الصوت
+            document.getElementById('readPage').addEventListener('click', readPage);
+            document.getElementById('readSection').addEventListener('click', readCurrentSection);
+            document.getElementById('stopReading').addEventListener('click', stopSpeaking);
+            document.getElementById('autoIntro').addEventListener('click', autoIntroduce);
+            
+            // التعريف التلقائي بعد تحميل الصفحة مباشرة
+            setTimeout(autoIntroduce, 1000);
+            
+            // تبديل الشرائح تلقائياً كل 10 ثوانٍ
+            setInterval(nextSlide, 10000);
+        });
+    </script>
+</body>
+</html>

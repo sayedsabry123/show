@@ -70,18 +70,20 @@
             z-index: 1;
         }
         
+        /* تحسين تصميم الشعارات لتصبح جنباً إلى جنب */
         .logo-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             flex-wrap: wrap;
             margin-bottom: 15px;
+            width: 100%;
         }
         
         .university-logo {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid white;
@@ -94,8 +96,8 @@
         }
         
         .program-logo {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             background: white;
             border-radius: 50%;
             display: flex;
@@ -115,6 +117,7 @@
         
         .header-text {
             text-align: center;
+            width: 100%;
         }
         
         h1 {
@@ -1219,13 +1222,13 @@
             }
             
             .logo-container {
-                gap: 12px;
+                gap: 15px;
                 margin-bottom: 12px;
             }
             
             .university-logo, .program-logo {
-                width: 60px;
-                height: 60px;
+                width: 65px;
+                height: 65px;
             }
             
             .program-logo {
@@ -1387,8 +1390,16 @@
             }
             
             .logo-container {
-                flex-direction: column;
                 gap: 10px;
+            }
+            
+            .university-logo, .program-logo {
+                width: 55px;
+                height: 55px;
+            }
+            
+            .program-logo {
+                font-size: 20px;
             }
             
             .stat-item {
@@ -1506,17 +1517,17 @@
     <header>
         <div class="container">
             <div class="header-content">
+                <!-- الشعارات جنباً إلى جنب -->
                 <div class="logo-container">
                     <img src="https://i.postimg.cc/4ydC742C/jam-t-dmyat.gif" alt="شعار جامعة دمياط" class="university-logo">
                     <div class="program-logo">
-                        <i class="fas fa-apple-alt"></i>
-                    </div>
+                    <img src="https://i.postimg.cc/cCRX9dxm/6728326c-420b-41ed-bbd6-17156ca23651.jpg" alt="شعار جامعة دمياط" class="university-logo">                    </div>
                 </div>
                 <div class="header-text">
                     <h1>برنامج سلامة وجودة تصنيع الأغذية</h1>
                     <p class="subtitle">كلية الزراعة - جامعة دمياط</p>
                     <div class="stats">
-        </div>
+    
     </header>
     
     <nav>
@@ -1730,11 +1741,7 @@
             
             <div class="gallery-container">
                 <div class="gallery-filter">
-                    <button class="filter-btn active" data-filter="all">الكل</button>
-                    <button class="filter-btn" data-filter="image">الصور</button>
-                    <button class="filter-btn" data-filter="video">الفيديوهات</button>
-                    <button class="filter-btn" data-filter="lab">المعامل</button>
-                    <button class="filter-btn" data-filter="event">الفعاليات</button>
+                   
                 </div>
                 
                 <div class="media-grid" id="mediaGrid">
@@ -1779,7 +1786,7 @@
             <div class="footer-content">
                 <p class="supervisor">إشراف: الدكتور / محمد عبده حسين</p>
                 <p>كلية الزراعة - جامعة دمياط</p>
-                
+                <p>إعداد / الزهراء حافظ حافظ الطاووسى - مريهان مجدي صديق الجبالي - ريناد محمد جلال عايد </p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -1846,18 +1853,7 @@
                 src: "https://i.postimg.cc/T38Yfpw0/35e5244718691c5df461ad5db8cf42b1.jpg",
                 title: "صورة تعبيرية عن البرنامج",
                 description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
-                date: "2025-01-15",
-                tags: ["برنامج", "تعريف"],
-                category: "image"
-            },
-            {
-                id: 2,
-                type: "video",
-                src: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
-                poster: "https://via.placeholder.com/600x400/1e7e5c/ffffff?text=فيديو+البرنامج",
-          title: "صورة تعبيرية عن البرنامج",
-                description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
-                date: "2025-01-15",
+                date: " ",
                 tags: ["برنامج", "تعريف"],
                 category: "image"
             },
@@ -1867,41 +1863,50 @@
                 src: "https://i.postimg.cc/FKGYr373/1667234079.jpg",
                 title: "صورة تعبيرية عن البرنامج",
                 description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
-                date: "2025-01-15",
+                date: " ",
                 tags: ["برنامج", "تعريف"],
                 category: "image"
             },
             {
+                id: 3,
+                type: "image",
+                src: "https://i.postimg.cc/xdpdrgb3/4ad5dabf-83b7-48aa-a86e-23d48c5a16c2.webp",
+                title: "معامل البرنامج المتخصصة",
+                description: "معامل مجهزة بأحدث التقنيات لتحليل الأغذية",
+                date: "",
+                tags: ["معامل", "مختبرات"],
+                category: "lab"
+            },
+           {
                 id: 4,
                 type: "image",
-                src: "https://i.postimg.cc/SKHwzt2r/1629853952-949-144776-f-cnvidhnvdnnrbxyucnuvd3aty29udgvudc91cgxvywrzlziwmtcvmdyvjuqwjujgjuqxjtgwjuqw.jpg",
+                src: "https://www.maspero.eg/images/2024/04/17136292702.jpg",
            title: "صورة تعبيرية عن البرنامج",
                 description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
-                date: "2025-01-15",
+                date: " ",
                 tags: ["برنامج", "تعريف"],
                 category: "image"
             },
-            {
-                id: 5,
-                type: "video",
-                src: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
-                poster: "https://via.placeholder.com/600x400/0a5c36/ffffff?text=جولة+في+المعامل",
-           title: "صورة تعبيرية عن البرنامج",
+                {
+                id: 6,
+                type: "image",
+                src: "https://i.postimg.cc/1z0pp848/FB-IMG-1733081729457.jpg",
+            title: "صورة تعبيرية عن البرنامج",
                 description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
-                date: "2025-01-15",
+                date: "   ",
                 tags: ["برنامج", "تعريف"],
                 category: "image"
             },
             {
                 id: 6,
                 type: "image",
-                src: "https://i.postimg.cc/1z0pp848/FB-IMG-1733081729457.jpg",
-            title: "صورة تعبيرية عن البرنامج",
-                description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
-                date: "2025-01-15",
-                tags: ["برنامج", "تعريف"],
-                category: "image"
-            },
+                src: "https://i.postimg.cc/brxtcJ2z/images.jpg",
+                title: "محاضرة عن جودة الأغذية",
+                description: "محاضرة يلقيها أحد أساتذة البرنامج",
+                date: "2025-02-25",
+                tags: ["محاضرة", "تعليم"],
+                category: "event"
+            }
         ];
         
         // متغيرات Lightbox

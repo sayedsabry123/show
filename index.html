@@ -394,40 +394,258 @@
             background: linear-gradient(135deg, var(--accent-color), #c19b2e);
         }
         
-        .media-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 20px 0;
+        /* معرض الوسائط المحسن */
+        .gallery-container {
+            margin: 25px 0;
         }
         
-        .media-item {
-            flex: 1 1 250px;
-            border-radius: 10px;
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .media-card {
+            background: white;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             transition: var(--transition);
             position: relative;
         }
         
-        .media-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+        .media-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
         }
         
-        .media-item img, .media-item video {
+        .media-thumbnail {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+        }
+        
+        .media-thumbnail img, .media-thumbnail video {
             width: 100%;
-            height: 160px;
+            height: 100%;
             object-fit: cover;
-            display: block;
+            transition: var(--transition);
+        }
+        
+        .media-card:hover .media-thumbnail img,
+        .media-card:hover .media-thumbnail video {
+            transform: scale(1.05);
+        }
+        
+        .media-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 15px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .media-card:hover .media-overlay {
+            opacity: 1;
+        }
+        
+        .media-type {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .media-title {
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+        
+        .media-description {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+        
+        .media-info {
+            padding: 15px;
+        }
+        
+        .media-date {
+            color: var(--light-text);
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .media-caption {
-            padding: 12px;
-            background-color: white;
-            font-size: 0.85rem;
-            text-align: center;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .media-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .media-tag {
+            background: var(--light-color);
+            color: var(--secondary-color);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
             font-weight: 500;
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .lightbox.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .lightbox-content img, .lightbox-content video {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .lightbox-close:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+        }
+        
+        .lightbox-prev, .lightbox-next {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+        
+        .lightbox-prev:hover, .lightbox-next:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .lightbox-caption {
+            position: absolute;
+            bottom: -40px;
+            right: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            padding: 10px;
+        }
+        
+        .empty-gallery {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--light-text);
+        }
+        
+        .empty-gallery i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #e0e0e0;
         }
         
         .opportunities {
@@ -1084,8 +1302,13 @@
                 font-size: 0.8rem;
             }
             
-            .media-item {
-                flex: 1 1 100%;
+            .media-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+            
+            .media-thumbnail {
+                height: 180px;
             }
             
             .opportunities {
@@ -1142,6 +1365,16 @@
                 height: 40px;
                 font-size: 0.9rem;
             }
+            
+            .lightbox-nav {
+                padding: 0 10px;
+            }
+            
+            .lightbox-prev, .lightbox-next {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1196,6 +1429,23 @@
             
             .voice-controls-panel {
                 padding: 15px;
+            }
+            
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .media-thumbnail {
+                height: 200px;
+            }
+            
+            .gallery-filter {
+                gap: 8px;
+            }
+            
+            .filter-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -1265,23 +1515,7 @@
                 <div class="header-text">
                     <h1>برنامج سلامة وجودة تصنيع الأغذية</h1>
                     <p class="subtitle">كلية الزراعة - جامعة دمياط</p>
-                    
                     <div class="stats">
-                        <div class="stat-item">
-                            <span class="stat-number" id="studentsCount">0</span>
-                            <span class="stat-label">طالب مسجل</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">95%</span>
-                            <span class="stat-label">نسبة التشغيل</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">15+</span>
-                            <span class="stat-label">شريك صناعي</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </header>
     
@@ -1313,7 +1547,8 @@
             <div class="slide active" id="slide1">
                 <h2 class="slide-title"><i class="fas fa-users"></i> المجموعة المشاركة في التكليف</h2>
                 <div class="slide-content">
-                    <p>نحن مجموعة من الطلاب المتفانين في تقديم هذا العمل التعريفي عن برنامج سلامة وجودة تصنيع الأغذية.</p>
+                    <p>إعداد / الزهراء حافظ حافظ الطاووسى ، مريهان مجدي صديق الجبالي،
+ريناد محمد جلال عايد ، نحن مجموعة من الطلاب المتفانين في تقديم هذا العمل التعريفي عن برنامج سلامة وجودة تصنيع الأغذية.</p>
                     <p>نهدف من خلال هذا العمل إلى تعريف الطلاب الجدد بالفرص الواعدة التي يوفرها هذا البرنامج المتميز.</p>
                     
                     <div class="features" style="margin-top: 20px;">
@@ -1491,25 +1726,19 @@
         
         <section id="media">
             <h2 class="slide-title"><i class="fas fa-photo-video"></i> معرض الوسائط</h2>
-            <p>يمكنك إضافة الصور والفيديوهات الخاصة بالبرنامج هنا:</p>
+            <p>استكشف معرض الصور والفيديوهات الخاص ببرنامج سلامة وجودة تصنيع الأغذية</p>
             
-            <div class="media-container">
-                <div class="media-item">
-                    <img src="https://via.placeholder.com/600x400/0a5c36/ffffff?text=صورة+عن+البرنامج" alt="صورة عن البرنامج">
-                    <div class="media-caption">صورة تعبيرية عن البرنامج</div>
+            <div class="gallery-container">
+                <div class="gallery-filter">
+                    <button class="filter-btn active" data-filter="all">الكل</button>
+                    <button class="filter-btn" data-filter="image">الصور</button>
+                    <button class="filter-btn" data-filter="video">الفيديوهات</button>
+                    <button class="filter-btn" data-filter="lab">المعامل</button>
+                    <button class="filter-btn" data-filter="event">الفعاليات</button>
                 </div>
                 
-                <div class="media-item">
-                    <video controls poster="https://via.placeholder.com/600x400/1e7e5c/ffffff?text=فيديو+البرنامج">
-                        <source src="video-placeholder.mp4" type="video/mp4">
-                        متصفحك لا يدعم تشغيل الفيديو.
-                    </video>
-                    <div class="media-caption">فيديو تعريفي عن البرنامج</div>
-                </div>
-                
-                <div class="media-item">
-                    <img src="https://via.placeholder.com/600x400/08442a/ffffff?text=معمل+البرنامج" alt="معمل البرنامج">
-                    <div class="media-caption">معامل البرنامج المتخصصة</div>
+                <div class="media-grid" id="mediaGrid">
+                    <!-- العناصر سيتم إضافتها ديناميكياً -->
                 </div>
             </div>
         </section>
@@ -1564,6 +1793,25 @@
         </div>
     </footer>
 
+    <!-- Lightbox للعرض الموسع -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" id="lightboxClose">
+                <i class="fas fa-times"></i>
+            </span>
+            <div id="lightboxMedia"></div>
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+        <div class="lightbox-nav">
+            <div class="lightbox-prev" id="lightboxPrev">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="lightbox-next" id="lightboxNext">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+        </div>
+    </div>
+
     <div class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </div>
@@ -1589,6 +1837,76 @@
         let voices = [];
         let currentText = '';
         let currentElement = null;
+        
+        // بيانات الوسائط
+        const mediaItems = [
+            {
+                id: 1,
+                type: "image",
+                src: "https://i.postimg.cc/T38Yfpw0/35e5244718691c5df461ad5db8cf42b1.jpg",
+                title: "صورة تعبيرية عن البرنامج",
+                description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
+                date: "2025-01-15",
+                tags: ["برنامج", "تعريف"],
+                category: "image"
+            },
+            {
+                id: 2,
+                type: "video",
+                src: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+                poster: "https://via.placeholder.com/600x400/1e7e5c/ffffff?text=فيديو+البرنامج",
+          title: "صورة تعبيرية عن البرنامج",
+                description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
+                date: "2025-01-15",
+                tags: ["برنامج", "تعريف"],
+                category: "image"
+            },
+            {
+                id: 3,
+                type: "image",
+                src: "https://i.postimg.cc/FKGYr373/1667234079.jpg",
+                title: "صورة تعبيرية عن البرنامج",
+                description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
+                date: "2025-01-15",
+                tags: ["برنامج", "تعريف"],
+                category: "image"
+            },
+            {
+                id: 4,
+                type: "image",
+                src: "https://i.postimg.cc/SKHwzt2r/1629853952-949-144776-f-cnvidhnvdnnrbxyucnuvd3aty29udgvudc91cgxvywrzlziwmtcvmdyvjuqwjujgjuqxjtgwjuqw.jpg",
+           title: "صورة تعبيرية عن البرنامج",
+                description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
+                date: "2025-01-15",
+                tags: ["برنامج", "تعريف"],
+                category: "image"
+            },
+            {
+                id: 5,
+                type: "video",
+                src: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
+                poster: "https://via.placeholder.com/600x400/0a5c36/ffffff?text=جولة+في+المعامل",
+           title: "صورة تعبيرية عن البرنامج",
+                description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
+                date: "2025-01-15",
+                tags: ["برنامج", "تعريف"],
+                category: "image"
+            },
+            {
+                id: 6,
+                type: "image",
+                src: "https://i.postimg.cc/1z0pp848/FB-IMG-1733081729457.jpg",
+            title: "صورة تعبيرية عن البرنامج",
+                description: "تعريف ببرنامج سلامة وجودة تصنيع الأغذية",
+                date: "2025-01-15",
+                tags: ["برنامج", "تعريف"],
+                category: "image"
+            },
+        ];
+        
+        // متغيرات Lightbox
+        let currentMediaIndex = 0;
+        let filteredMediaItems = [];
         
         // التحكم في لوحة الصوت
         const voiceIcon = document.getElementById('voiceIcon');
@@ -1817,6 +2135,199 @@
             }
         }
         
+        // تهيئة معرض الوسائط
+        function initGallery() {
+            renderMediaItems(mediaItems);
+            setupFilterButtons();
+            setupLightbox();
+        }
+        
+        // عرض عناصر الوسائط
+        function renderMediaItems(items) {
+            const mediaGrid = document.getElementById('mediaGrid');
+            mediaGrid.innerHTML = '';
+            
+            if (items.length === 0) {
+                mediaGrid.innerHTML = `
+                    <div class="empty-gallery">
+                        <i class="fas fa-images"></i>
+                        <p>لا توجد وسائط متاحة حالياً</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            items.forEach(item => {
+                const mediaCard = document.createElement('div');
+                mediaCard.className = 'media-card';
+                mediaCard.setAttribute('data-category', item.category);
+                
+                let mediaContent = '';
+                if (item.type === 'image') {
+                    mediaContent = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
+                } else if (item.type === 'video') {
+                    mediaContent = `<video poster="${item.poster || ''}">
+                        <source src="${item.src}" type="video/mp4">
+                        متصفحك لا يدعم تشغيل الفيديو.
+                    </video>`;
+                }
+                
+                mediaCard.innerHTML = `
+                    <div class="media-thumbnail">
+                        ${mediaContent}
+                        <div class="media-overlay">
+                            <div>
+                                <div class="media-title">${item.title}</div>
+                                <div class="media-description">${item.description}</div>
+                            </div>
+                        </div>
+                        <div class="media-type">
+                            <i class="fas ${item.type === 'image' ? 'fa-image' : 'fa-video'}"></i>
+                            ${item.type === 'image' ? 'صورة' : 'فيديو'}
+                        </div>
+                    </div>
+                    <div class="media-info">
+                        <div class="media-date">
+                            <i class="far fa-calendar"></i>
+                            ${formatDate(item.date)}
+                        </div>
+                        <div class="media-caption">${item.title}</div>
+                        <div class="media-tags">
+                            ${item.tags.map(tag => `<span class="media-tag">#${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                mediaCard.addEventListener('click', () => openLightbox(items.indexOf(item)));
+                mediaGrid.appendChild(mediaCard);
+            });
+            
+            // حفظ العناصر المصفاة للاستخدام في Lightbox
+            filteredMediaItems = items;
+        }
+        
+        // إعداد أزرار التصفية
+        function setupFilterButtons() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // إزالة النشاط من جميع الأزرار
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // إضافة النشاط للزر المحدد
+                    button.classList.add('active');
+                    
+                    const filter = button.getAttribute('data-filter');
+                    filterMediaItems(filter);
+                });
+            });
+        }
+        
+        // تصفية عناصر الوسائط
+        function filterMediaItems(filter) {
+            if (filter === 'all') {
+                renderMediaItems(mediaItems);
+            } else {
+                const filteredItems = mediaItems.filter(item => item.category === filter);
+                renderMediaItems(filteredItems);
+            }
+        }
+        
+        // تنسيق التاريخ
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-EG', options);
+        }
+        
+        // إعداد Lightbox
+        function setupLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxClose = document.getElementById('lightboxClose');
+            const lightboxPrev = document.getElementById('lightboxPrev');
+            const lightboxNext = document.getElementById('lightboxNext');
+            
+            // إغلاق Lightbox
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+            
+            // التنقل بين الوسائط
+            lightboxPrev.addEventListener('click', showPrevMedia);
+            lightboxNext.addEventListener('click', showNextMedia);
+            
+            // إضافة اختصارات لوحة المفاتيح
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.classList.contains('active')) {
+                    if (e.key === 'Escape') {
+                        closeLightbox();
+                    } else if (e.key === 'ArrowRight') {
+                        showPrevMedia();
+                    } else if (e.key === 'ArrowLeft') {
+                        showNextMedia();
+                    }
+                }
+            });
+        }
+        
+        // فتح Lightbox
+        function openLightbox(index) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxMedia = document.getElementById('lightboxMedia');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            
+            currentMediaIndex = index;
+            const mediaItem = filteredMediaItems[currentMediaIndex];
+            
+            let mediaContent = '';
+            if (mediaItem.type === 'image') {
+                mediaContent = `<img src="${mediaItem.src}" alt="${mediaItem.title}">`;
+            } else if (mediaItem.type === 'video') {
+                mediaContent = `<video controls autoplay>
+                    <source src="${mediaItem.src}" type="video/mp4">
+                    متصفحك لا يدعم تشغيل الفيديو.
+                </video>`;
+            }
+            
+            lightboxMedia.innerHTML = mediaContent;
+            lightboxCaption.innerHTML = `
+                <strong>${mediaItem.title}</strong> - ${mediaItem.description}
+            `;
+            
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // إغلاق Lightbox
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxMedia = document.getElementById('lightboxMedia');
+            
+            // إيقاف الفيديو إذا كان يعمل
+            const video = lightboxMedia.querySelector('video');
+            if (video) {
+                video.pause();
+            }
+            
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // عرض الوسائط السابقة
+        function showPrevMedia() {
+            currentMediaIndex = (currentMediaIndex - 1 + filteredMediaItems.length) % filteredMediaItems.length;
+            openLightbox(currentMediaIndex);
+        }
+        
+        // عرض الوسائط التالية
+        function showNextMedia() {
+            currentMediaIndex = (currentMediaIndex + 1) % filteredMediaItems.length;
+            openLightbox(currentMediaIndex);
+        }
+        
         // تحديث التنقل النشط
         function updateActiveNav() {
             const sections = document.querySelectorAll('section');
@@ -1908,6 +2419,7 @@
         window.addEventListener('load', function() {
             animateCounter();
             initSpeech();
+            initGallery();
             
             // إعداد مستمعي الأحداث لأزرار الصوت
             document.getElementById('readPage').addEventListener('click', readPage);
